@@ -1,5 +1,6 @@
 'use client'
 
+import { useTask } from "@/hooks/useTasks";
 import { useTaskStore } from "@/store/useTaskStore";
 import { Card, Input } from "antd";
 import Link from "next/link";
@@ -49,7 +50,10 @@ const formatDate = (date: string): { month: string; day: number } => {
 };
 
 const Tasks = () => {
+  const { data, isLoading, isError } = useTask();
   const tasks = useTaskStore((state) => state.tasks);
+  
+  console.log(data,tasks)
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredTasks = Object.keys(tasks).reduce((acc, date) => {
@@ -87,7 +91,13 @@ const Tasks = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="mb-4 p-2  w-full"
       />
-
+      {data?.map((item) => (
+        <div className="mb-4">
+          <div className={`bg-yellow-200 p-2 rounded`}>
+            <strong>{item.date} </strong> : {item.task}
+          </div>
+        </div>
+      ))}
      
       {Object.keys(groupedTasks).map((month) => (
         <div key={month} className="mb-4">
@@ -95,7 +105,7 @@ const Tasks = () => {
           <div className="space-y-2">
             {groupedTasks[parseInt(month, 10)].map(({ date, task, backgroundColor }) => (
               <div key={date} className={`${backgroundColor} p-2 rounded`}>
-                <strong>{formatDate(date).month} {formatDate(date).day}</strong>: {task.join(', ')}
+                <strong>{formatDate(date).month} {formatDate(date).day}</strong> : {task.join(', ')}
               </div>
             ))}
           </div>

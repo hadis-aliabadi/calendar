@@ -5,6 +5,7 @@ import { Calendar, Modal, Input, Card } from 'antd';
 import { useTaskStore } from '@/store/useTaskStore';
 import Link from 'next/link';
 import type { Dayjs } from 'dayjs';
+
 const Home = () => {
   const addTask = useTaskStore((state) => state.addTask);
   const tasks = useTaskStore((state) => state.tasks);
@@ -29,8 +30,9 @@ const Home = () => {
     setIsModalVisible(false);
   };
 
-  const dateCellRender = (value:Dayjs) => {
+  const cellRender = (value:Dayjs) => {
     const date = value.format('YYYY-MM-DD');
+    console.log(date)
     const dayTasks = tasks[date];
 
     if (dayTasks  && dayTasks.length > 0) {
@@ -41,10 +43,10 @@ const Home = () => {
 
   return (
     <Card title="Task Calendar" extra={<Link href="/tasks">Go to tasks</Link>} style={{ width: 600 }}>
-        <Calendar fullscreen={false} onSelect={handleDateSelect} dateCellRender={dateCellRender} />
+        <Calendar fullscreen={false} onSelect={handleDateSelect} cellRender={cellRender} />
         <Modal
           title={`Add Task for ${selectedDate}`}
-          visible={isModalVisible}
+          open={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
           
