@@ -1,7 +1,8 @@
 'use client'
 
 import { useTaskStore } from "@/store/useTaskStore";
-import { Input } from "antd";
+import { Card, Input } from "antd";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -78,15 +79,13 @@ const Tasks = () => {
   }, {} as Record<number, { date: string; task: string[]; backgroundColor: string }[]>);
 
   return (
-    <div className="p-5">
-      <h1 className="text-2xl mb-4">Tasks by Month</h1>
-      
-      <input
+    <Card title="Tasks by Month" extra={<Link href="/">Go to calendar</Link>} style={{ width: 600 }}>
+      <Input
         type="text"
         placeholder="Search tasks..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="mb-4 p-2 border border-gray-300 rounded w-full"
+        className="mb-4 p-2  w-full"
       />
 
      
@@ -102,7 +101,7 @@ const Tasks = () => {
           </div>
         </div>
       ))}
-    </div>
+    </Card>
   );
 };
 

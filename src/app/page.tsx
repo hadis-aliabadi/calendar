@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react';
-import { Calendar, Modal, Input } from 'antd';
+import { Calendar, Modal, Input, Card } from 'antd';
 import { useTaskStore } from '@/store/useTaskStore';
 import Link from 'next/link';
 import type { Dayjs } from 'dayjs';
@@ -40,24 +40,22 @@ const Home = () => {
   };
 
   return (
-    <div className="p-5">
-      <h1 className="text-2xl mb-4">Task Calendar</h1>
-      <Link href='/tasks'>tasks</Link>
-      <Calendar fullscreen={false} onSelect={handleDateSelect} dateCellRender={dateCellRender} />
-      <Modal
-        title={`Add Task for ${selectedDate}`}
-        visible={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        
-      >
-        <Input
-          placeholder="Enter task description"
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-        />
-      </Modal>
-    </div>
+    <Card title="Task Calendar" extra={<Link href="/tasks">Go to tasks</Link>} style={{ width: 600 }}>
+        <Calendar fullscreen={false} onSelect={handleDateSelect} dateCellRender={dateCellRender} />
+        <Modal
+          title={`Add Task for ${selectedDate}`}
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          
+        >
+          <Input
+            placeholder="Enter task description"
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+        </Modal>
+    </Card>
   );
 };
 

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Card } from "antd";
+import ReactQueryProvider from "@/utils/provider/ReactQueryProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +18,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ReactQueryProvider>
+          <div className="flex justify-center  items-center h-screen my-12">
+            {children}
+          </div>
+        </ReactQueryProvider>
+      </body>
     </html>
   );
 }
