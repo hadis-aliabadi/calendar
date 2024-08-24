@@ -92,7 +92,7 @@ const Tasks = () => {
         className="mb-4 p-2  w-full"
       />
       {data?.map((item) => (
-        <div className="mb-4">
+        <div className="mb-4" key={item.date}>
           <div className={`bg-yellow-200 p-2 rounded`}>
             <strong>{item.date} </strong> : {item.task}
           </div>
