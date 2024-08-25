@@ -25,7 +25,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <div className="flex justify-center items-center gap-8 min-h-screen  ">
             {children}
-            <Image src={event} alt={"event "} width={500} height={500}/>
+            <Image src={event} alt={"event "} width={500} height={500} className="hidden md:block"/>
           </div>
         </ReactQueryProvider>
       </body>
