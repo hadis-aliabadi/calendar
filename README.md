@@ -9,6 +9,7 @@ A simple Task Calendar application built with Next.js, TypeScript, Zustand, Ant 
 - [Project Structure](#project-structure)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
+- [Notes on JSON Data in Production](#note)
 
 
 ## Features
@@ -97,3 +98,6 @@ Use the search input to filter tasks by description.
 **Ant Design**: A popular UI component library.
 **Tailwind CSS**: A utility-first CSS framework.
 **React Query**: A data-fetching library for React.
+
+## note 
+Please note that the default values from the JSON file are not displayed when the project is deployed on Vercel. This issue persists despite using the concurrently package. However, you can view the data locally without any problems by running the JSON server
