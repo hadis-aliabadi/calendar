@@ -20,7 +20,6 @@ const Home = () => {
 
   const handleDateSelect = (date:Dayjs, { source }:HandleDateSelectParams) => {
     const month =date.month();
-    console.log(date.month())
     if (month >= 3 && month <= 5) {
       setSeason('season-spring'); 
     } else if (month >= 6 && month <= 8) {
@@ -60,13 +59,6 @@ const Home = () => {
   };
 
 
-  const getSeasonClass = () => {
-    const month = new Date().getMonth();
-    if (month >= 2 && month <= 4) return 'season-spring';
-    if (month >= 5 && month <= 7) return 'season-summer';
-    if (month >= 8 && month <= 10) return 'season-autumn';
-    return 'season-winter';
-  };
 
   return (
     <Card 
