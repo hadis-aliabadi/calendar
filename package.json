@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev && npx json-server --watch db.json --port 3001",
-    "build": "next build && npx json-server --watch db.json --port 3001",
+    "build": "next build ",
     "start": "next start && npx json-server --watch db.json --port 3001",
     "lint": "next lint"
   },
