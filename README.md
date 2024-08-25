@@ -47,6 +47,7 @@ Make sure you have Node.js and npm (or Yarn) installed on your machine.
 
     ```bash
     npm run dev
+    npx json-server --watch db.json --port 3001
     ```
 
 4. **Open the app in your browser:**
