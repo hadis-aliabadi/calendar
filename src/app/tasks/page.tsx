@@ -6,8 +6,9 @@ import { Card, Input } from "antd";
 import Link from "next/link";
 import { useState } from "react";
 
+type Season = 'winter' | 'fall' | 'summer' | 'spring' 
 
-const getSeason = (month: number): string => {
+const getSeason = (month: number):Season => {
   if (month >= 3 && month <= 5) {
     return 'spring'; 
   } else if (month >= 6 && month <= 8) {
@@ -20,7 +21,7 @@ const getSeason = (month: number): string => {
 };
 
 
-const getBackgroundColor = (season: string): string => {
+const getBackgroundColor = (season: Season): string => {
   switch (season) {
     case 'spring':
       return 'bg-green-200'; 
@@ -30,30 +31,25 @@ const getBackgroundColor = (season: string): string => {
       return 'bg-orange-200'; 
     case 'winter':
       return 'bg-blue-200'; 
-    default:
-      return '';
   }
 };
 
 
-const formatDate = (date: string): { month: string; day: number } => {
+const formatDate = (date: string): {year:number; month: string; day: number } => {
   const dateObj = new Date(date);
   const monthNames = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-
+  const year = dateObj.getFullYear();
   const month = monthNames[dateObj.getMonth()];
   const day = dateObj.getDate();
-
-  return { month, day };
+  return {year, month, day };
 };
 
 const Tasks = () => {
   const { data, isLoading, isError } = useTask();
   const tasks = useTaskStore((state) => state.tasks);
-  
-  console.log(data,tasks)
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredTasks = Object.keys(tasks).reduce((acc, date) => {
@@ -83,7 +79,7 @@ const Tasks = () => {
   }, {} as Record<number, { date: string; task: string[]; backgroundColor: string }[]>);
 
   return (
-    <Card title="Tasks by Month" extra={<Link href="/">Go to calendar</Link>} style={{ width: 600 }}>
+    <Card title="Tasks by Month" extra={<Link href="/" className="font-bold">Go to calendar</Link>} style={{ width: 600 }}>
       <Input
         type="text"
         placeholder="Search tasks..."
@@ -105,7 +101,7 @@ const Tasks = () => {
           <div className="space-y-2">
             {groupedTasks[parseInt(month, 10)].map(({ date, task, backgroundColor }) => (
               <div key={date} className={`${backgroundColor} p-2 rounded`}>
-                <strong>{formatDate(date).month} {formatDate(date).day}</strong> : {task.join(', ')}
+                <strong>{formatDate(date).year} {formatDate(date).month} {formatDate(date).day}</strong> : {task.join(', ')}
               </div>
             ))}
           </div>

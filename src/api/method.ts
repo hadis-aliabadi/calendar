@@ -8,14 +8,7 @@ export function setAPIHeader(
   key: string,
   value: string,
 ) {
-  // TODO: decide which one is better overall
   axios.defaults.headers.common[key] = value;
-
-  // axios.interceptors.request.use((config) => {
-  //   // @ts-ignore
-  //   config.headers[key] = value;
-  //   return config;
-  // });
 }
 
 

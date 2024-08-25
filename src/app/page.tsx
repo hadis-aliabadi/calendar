@@ -5,6 +5,10 @@ import { Calendar, Modal, Input, Card } from 'antd';
 import { useTaskStore } from '@/store/useTaskStore';
 import Link from 'next/link';
 import type { Dayjs } from 'dayjs';
+  
+interface HandleDateSelectParams {
+  source: string;
+}
 
 const Home = () => {
   const addTask = useTaskStore((state) => state.addTask);
@@ -12,10 +16,25 @@ const Home = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newTask, setNewTask] = useState('');
+  const [season,setSeason]=useState('season-summer')
 
-  const handleDateSelect = (date: any) => {
+  const handleDateSelect = (date:Dayjs, { source }:HandleDateSelectParams) => {
+    const month =date.month();
+    console.log(date.month())
+    if (month >= 3 && month <= 5) {
+      setSeason('season-spring'); 
+    } else if (month >= 6 && month <= 8) {
+      setSeason('season-summer'); 
+    } else if (month >= 9 && month <= 11) {
+      setSeason('season-fall'); 
+    } else {
+      setSeason('season-winter'); 
+    }
+
+    if (source === 'date') {
     setSelectedDate(date.format('YYYY-MM-DD'));
     setIsModalVisible(true);
+    }
   };
 
   const handleOk = () => {
@@ -32,7 +51,6 @@ const Home = () => {
 
   const cellRender = (value:Dayjs) => {
     const date = value.format('YYYY-MM-DD');
-    console.log(date)
     const dayTasks = tasks[date];
 
     if (dayTasks  && dayTasks.length > 0) {
@@ -41,15 +59,32 @@ const Home = () => {
 
   };
 
+
+  const getSeasonClass = () => {
+    const month = new Date().getMonth();
+    if (month >= 2 && month <= 4) return 'season-spring';
+    if (month >= 5 && month <= 7) return 'season-summer';
+    if (month >= 8 && month <= 10) return 'season-autumn';
+    return 'season-winter';
+  };
+
   return (
-    <Card title="Task Calendar" extra={<Link href="/tasks">Go to tasks</Link>} style={{ width: 600 }}>
-        <Calendar fullscreen={false} onSelect={handleDateSelect} cellRender={cellRender} />
+    <Card 
+        title="Task Calendar" 
+        className={season} 
+        extra={<Link className=' font-bold' href="/tasks">Go to tasks</Link>} 
+        style={{ width: 600 }}
+      >
+        <Calendar 
+          fullscreen={false} 
+          onSelect={handleDateSelect} 
+          cellRender={cellRender} 
+        />
         <Modal
           title={`Add Task for ${selectedDate}`}
           open={isModalVisible}
           onOk={handleOk}
           onCancel={handleCancel}
-          
         >
           <Input
             placeholder="Enter task description"
